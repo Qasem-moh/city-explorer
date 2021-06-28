@@ -1,50 +1,81 @@
-import React from 'react';
-import axios from 'axios'
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Form, Button, Image} from 'react-bootstrap';
+import Alertmsg from './alert';
 
-class City extends React.Component {
+export class Citys extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            nameOfCity: "",
-            long: "",
-            lat: ""
+            cityName: "",
+            cityData: {},
+            display: false,
+            error: "",
+            alert: false
         }
     }
 
-    displayNameOfCity = (e) => {
+    updateCity = (e) => {
+        console.log(e.target.value);
         this.setState({
-            nameOfCity: e.target.value
-        })
+            cityName: e.target.value,
+        });
+        console.log(this.state);
     }
-    /**
-     * 
-     * @param {Event} e 
-     */
-    searchData = async (e) => {
+
+    getData = async (e) => {
         e.preventDefault();
-        let getDataAPI = await axios.get(`https://us1.locationiq.com/v1/search.php?key=	pk.3cf913088667d99eedcfd99de144aee7&city=${this.state.searchData}&format=json`)
-        this.setState({
-            // nameOfCity: getDataAPI.data[0].display_name,
-            long: getDataAPI.data[0].lon,
-            lat: getDataAPI.data[0].lat
-        })
+        try {
+            const axiosData = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.88bdc34a015f169659efd4fa8583736c&q=${this.state.cityName}&format=json`)
+            console.log(axiosData);
+            this.setState({
+                cityData: axiosData.data[0],
+                display: true,
+                alert: false
+            })
+        } catch (error) {
+            this.setState({
+                errot: error.message,
+                alert: true
+            })
+        }
     }
+
+
     render() {
         return (
             <div>
-                <form onSubmit={this.searchData}>
-                    <input type='text' placeholder='Enter City To search in US'
-                        onChange={(e) => { this.displayNameOfCity(e) }} />
-                    <button >Explore!</button>
-                </form>
-                <p>display_name: {this.state.nameOfCity}</p>
-                <h3>{this.state.lat}</h3>
-                <h3>{this.state.long}</h3>
+
+                <Alertmsg
+                    alert={this.state.alert}
+                />
+
+                <Form onSubmit={this.getData}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail" 	 >
+                        <Form.Label>City Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter City Name" onChange={this.updateCity} size={'sm'} />
+                    </Form.Group>
+                    <Button variant="primary" type="submit" >
+                        Explore!
+                    </Button>
+                </Form>
+                {this.state.display &&
+                    <div>
+                        <p>
+                            {this.state.cityData.display_name}
+                        </p>
+                    <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.88bdc34a015f169659efd4fa8583736c&q&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`} rounded />
+                        <p>
+                            {`latitude: ${this.state.cityData.lat}, longitude: ${this.state.cityData.lon}`}
+                        </p>
+                    </div>
+                }
             </div>
         )
     }
-
 }
 
-export default City;
+export default Citys;
+
+
