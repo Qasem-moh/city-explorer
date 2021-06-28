@@ -1,14 +1,22 @@
-import City from './components/city'
-// import NavBar from './components/nav'
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      {/* <NavBar /> */}
-      <City />
-    </div>
-  );
+import React, { Component } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Citys from './components/city'
+
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+
+        <header >
+          <h1>City Explorer </h1>
+        </header>
+
+        <Citys />
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
