@@ -16,7 +16,7 @@ export class Citys extends Component {
         }
     }
 
-    updateCity = (e) => {
+    GetCityName = (e) => {
         console.log(e.target.value);
         this.setState({
             cityName: e.target.value,
@@ -54,7 +54,7 @@ export class Citys extends Component {
                 <Form onSubmit={this.getData}>
                     <Form.Group className="mb-3" controlId="formBasicEmail" 	 >
                         <Form.Label>City Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter City Name" onChange={this.updateCity} size={'sm'} />
+                        <Form.Control type="text" placeholder="Enter City Name" onChange={this.GetCityName} size={'sm'} />
                     </Form.Group>
                     <Button variant="primary" type="submit" >
                         Explore!
