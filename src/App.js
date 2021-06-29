@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Citys from './components/city'
+import GetData from './components/city'
 
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
           <h1>City Explorer </h1>
         </header>
 
-        <Citys />
+        <GetData />
       </div>
     )
   }

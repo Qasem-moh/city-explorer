@@ -1,81 +1,76 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Form, Button, Image} from 'react-bootstrap';
-import Alertmsg from './alert';
 
-export class Citys extends Component {
+import React, { Component } from 'react'
+import axios from 'axios'
+import AlertMessage from './AlertMessage'
+import { Form, Button, Image } from 'react-bootstrap'
+// import '../style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+export class GetDataFromUser extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            cityName: "",
-            cityData: {},
             display: false,
-            error: "",
-            alert: false
+            dispName: '',
+
+            lat: '',
+            lon: '',
+            alertmess: false
         }
     }
-
-    GetCityName = (e) => {
-        console.log(e.target.value);
+    gitCityName = (e) => {
         this.setState({
-            cityName: e.target.value,
-        });
-        console.log(this.state);
+            dispName: e.target.value,
+        })
     }
 
-    getData = async (e) => {
-        e.preventDefault();
+    handelSubmit = async (e) => {
+        e.preventDefault()
         try {
-            const axiosData = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.88bdc34a015f169659efd4fa8583736c&q=${this.state.cityName}&format=json`)
-            console.log(axiosData);
+            let axiosData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.72479576e80a134c898131754a3ccdee&q=${this.state.dispName}&format=json`)
             this.setState({
-                cityData: axiosData.data[0],
+                dispName: axiosData.data[0].display_name,
+                lon: axiosData.data[0].lon,
+                lat: axiosData.data[0].lat,
                 display: true,
-                alert: false
+                alertmess: false
+
             })
-        } catch (error) {
+        }
+        catch {
             this.setState({
-                errot: error.message,
-                alert: true
+                alertmess: true
             })
         }
     }
-
 
     render() {
         return (
-            <div>
+            <div style={{ margin: 'auto' }} >
 
-                <Alertmsg
-                    alert={this.state.alert}
-                />
+                <AlertMessage alertmess={this.state.alertmess} />
+                <Form onSubmit={this.handelSubmit} style={{ margin: 'auto', width: '30%', marginTop: '10px' }}>
+                    <Form.Group >
+                        <Form.Control size="lg" type="text" placeholder='type city name ...' onChange={(e) => { this.gitCityName(e) }} />
+                        <br />
 
-                <Form onSubmit={this.getData}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail" 	 >
-                        <Form.Label>City Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter City Name" onChange={this.GetCityName} size={'sm'} />
+                        <Form.Control style={{ background: 'Beige' }} type="submit" value='Explore!' />
                     </Form.Group>
-                    <Button variant="primary" type="submit" >
-                        Explore!
-                    </Button>
                 </Form>
-                {this.state.display &&
-                    <div>
-                        <p>
-                            {this.state.cityData.display_name}
-                        </p>
-                    <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.88bdc34a015f169659efd4fa8583736c&q&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`} rounded />
-                        <p>
-                            {`latitude: ${this.state.cityData.lat}, longitude: ${this.state.cityData.lon}`}
-                        </p>
-                    </div>
-                }
+                <div style={{ textAlign: 'center', marginTop: '50px', color: 'green', fontFamily: 'cursive' }} >
+
+
+                    <h4>{this.state.dispName}</h4>
+                    <h4>{this.state.lon}</h4>
+                    <h4>{this.state.lat}</h4>
+                    {this.state.display && <div>
+                        <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.72479576e80a134c898131754a3ccdee&q&center=${this.state.lat},${this.state.lon}&zoom=10`} rounded="true" />
+                    </div>}
+                </div>
+
+
             </div>
         )
     }
 }
-
-export default Citys;
-
-
+export default GetDataFromUser
