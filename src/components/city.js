@@ -2,8 +2,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import AlertMessage from './AlertMessage'
-import { Form, Button, Image } from 'react-bootstrap'
-// import '../style.css';
+import { Form, Image } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export class GetDataFromUser extends Component {
@@ -57,7 +56,7 @@ export class GetDataFromUser extends Component {
                         <Form.Control style={{ background: 'Beige' }} type="submit" value='Explore!' />
                     </Form.Group>
                 </Form>
-                <div style={{ textAlign: 'center', marginTop: '50px', color: '#E1DF26', fontFamily: 'cursive',fontStyle:"bold" }} >
+                <div style={{ textAlign: 'center', marginTop: '50px', color: '#E1DF26', fontFamily: 'cursive', fontStyle: "bold" }} >
 
 
                     <h4>{this.state.dispName}</h4>
