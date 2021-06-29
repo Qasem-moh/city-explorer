@@ -27,7 +27,7 @@ export class GetDataFromUser extends Component {
     handelSubmit = async (e) => {
         e.preventDefault()
         try {
-            let axiosData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.72479576e80a134c898131754a3ccdee&q=${this.state.dispName}&format=json`)
+            let axiosData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.3cf913088667d99eedcfd99de144aee7&q=${this.state.dispName}&format=json`)
             this.setState({
                 dispName: axiosData.data[0].display_name,
                 lon: axiosData.data[0].lon,
@@ -57,7 +57,7 @@ export class GetDataFromUser extends Component {
                         <Form.Control style={{ background: 'Beige' }} type="submit" value='Explore!' />
                     </Form.Group>
                 </Form>
-                <div style={{ textAlign: 'center', marginTop: '50px', color: 'green', fontFamily: 'cursive' }} >
+                <div style={{ textAlign: 'center', marginTop: '50px', color: '#E1DF26', fontFamily: 'cursive',fontStyle:"bold" }} >
 
 
                     <h4>{this.state.dispName}</h4>
