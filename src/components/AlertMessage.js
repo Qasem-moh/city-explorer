@@ -5,7 +5,8 @@ export class AlertMessage extends Component {
         return (
             <div>
                 {this.props.alertmess &&
-                    <p style={{ color: 'red', fontSize: '40px', textAlign: 'center' }}>
+                    <p style={{
+                        color: '#C61F5E', fontSize: '40px', textAlign: 'center', fontFamily:" monospace"}}>
                         Please Enter correct city name ...!
                     </p>
                 }
