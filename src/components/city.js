@@ -10,25 +10,25 @@ export class GetDataFromUser extends Component {
         super(props)
         this.state = {
             display: false,
-            dispName: '',
+            displayName: '',
 
             lat: '',
             lon: '',
-            alertmess: false
+            alertErrorMesssage: false
         }
     }
     gitCityName = (e) => {
         this.setState({
-            dispName: e.target.value,
+            displayName: e.target.value,
         })
     }
 
     handelSubmit = async (e) => {
         e.preventDefault()
         try {
-            let axiosData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.3cf913088667d99eedcfd99de144aee7&q=${this.state.dispName}&format=json`)
+            let axiosData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.3cf913088667d99eedcfd99de144aee7&q=${this.state.displayName}&format=json`)
             this.setState({
-                dispName: axiosData.data[0].display_name,
+                displayName: axiosData.data[0].display_name,
                 lon: axiosData.data[0].lon,
                 lat: axiosData.data[0].lat,
                 display: true,
@@ -38,7 +38,7 @@ export class GetDataFromUser extends Component {
         }
         catch {
             this.setState({
-                alertmess: true
+                alertErrorMesssage: true
             })
         }
     }
@@ -47,7 +47,7 @@ export class GetDataFromUser extends Component {
         return (
             <div style={{ margin: 'auto' }} >
 
-                <AlertMessage alertmess={this.state.alertmess} />
+                <AlertMessage alertErrorMesssage={this.state.alertErrorMesssage} />
                 <Form onSubmit={this.handelSubmit} style={{ margin: 'auto', width: '30%', marginTop: '10px' }}>
                     <Form.Group >
                         <Form.Control size="lg" type="text" placeholder='type city name ...' onChange={(e) => { this.gitCityName(e) }} />
@@ -59,7 +59,7 @@ export class GetDataFromUser extends Component {
                 <div style={{ textAlign: 'center', marginTop: '50px', color: '#E1DF26', fontFamily: 'cursive', fontStyle: "bold" }} >
 
 
-                    <h4>{this.state.dispName}</h4>
+                    <h4>{this.state.displayName}</h4>
                     <h4>{this.state.lon}</h4>
                     <h4>{this.state.lat}</h4>
                     {this.state.display && <div>
